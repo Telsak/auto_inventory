@@ -8,7 +8,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['CURRENTROOM'] = 'B112'
 warnings.simplefilter(action='ignore', category=UserWarning)
-wb = load_workbook(os.path.join(basedir, 'CNAP_utrustning_inventarie.xlsx'))
+wb = load_workbook('CNAP_utrustning_inventarie.xlsx')
 ws = wb['Inventarie']
 
 def verify_scantoken(token_type, token):
@@ -30,7 +30,7 @@ def ifttt_message(payload, key):
     requests.post(f'https://maker.ifttt.com/trigger/notify/with/key/{key}', data=msg_data)
 
 def verify_barcode(payload):
-    if len(payload) == 9:
+    if len(payload) == 9 or len(payload) == 8:
         # check if its a CNAP qr code
         if payload[0:4] == 'CNAP' and payload[4:].isnumeric():
             return True, 'CNAP'
