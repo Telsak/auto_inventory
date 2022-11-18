@@ -72,7 +72,7 @@ def scan(token='', data=''):
         # if data is a tuple with a room/number: ie. ('set_room', 'b112')
         if 'set_room' in data:
             from flask import current_app
-            room = current_app.config['CURRENTROOM'] = data.split(':')[1]
+            room = current_app.config['CURRENTROOM'] = data.split(':')[1].upper()
             ifttt_message(f'room changed to {room}', verify_scantoken('IFTTT_key', 'NULL'))
             return f'room changed to {room}'
         elif 'IT' in data or 'CNAP' in data:
