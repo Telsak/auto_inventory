@@ -30,7 +30,7 @@ def ifttt_message(payload, key):
     requests.post(f'https://maker.ifttt.com/trigger/notify/with/key/{key}', data=msg_data)
 
 def verify_barcode(payload):
-    if len(payload) == 9 or len(payload) == 8:
+    if 7 < len(payload) < 10:
         # check if its a CNAP qr code
         if payload[0:4] == 'CNAP' and payload[4:].isnumeric():
             return True, 'CNAP'
@@ -65,10 +65,6 @@ def add_resource_to_csv(itnr):
         if add_header:
             writer.writerow(['Datum', 'Resurs'])
         writer.writerow(data)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 @app.route('/scan/<token>/<data>')
 def scan(token='', data=''):
